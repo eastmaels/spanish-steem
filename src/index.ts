@@ -4,6 +4,7 @@ import { Client, PrivateKey } from 'dsteem'
 import * as es from 'event-stream'
 import * as util from 'util'
 import * as striptags from 'striptags'
+import { send_memo } from './steem'
 
 const mongoose = require('mongoose')
 require('./models/Overseer');
@@ -11,13 +12,13 @@ const Overseer = mongoose.model('Overseer');
 
 // Environment Init
 dotenv.config()
-if (!process.env.BOT || !process.env.ACCOUNT_KEY || !process.env.BOT_COMMAND
-    || !process.env.MAIN_TAG || !process.env.ULOGS_APP 
-    || !process.env.DEFAULT_VOTE_WEIGHT) throw new Error('ENV variable missing')
+if (!process.env.BOT || !process.env.ACCOUNT_KEY) throw new Error('ENV variable missing')
 // @ts-ignore
 let ACCOUNT_KEY: string = process.env.ACCOUNT_KEY
 // @ts-ignore
 let BOT: string = process.env.BOT
+// @ts-ignore
+let SIMULATE_ONLY: boolean = (process.env.SIMULATE_ONLY === "true")
 
 // Steem Init
 const client = new Client('https://api.steemit.com')

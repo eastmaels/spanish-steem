@@ -65,14 +65,15 @@ export const send_memo = async (
 ) => {
   console.log('sending memo to: ', postAuthor);
     
-  const transf = new Object();
-  transf.from = bot;
-  transf.to = postAuthor;
-  transf.amount = '0.001 SBD';
-
   let message = 'Hi @username! We support give upvotes for people who comment on Spanish related posts. Please come, see, and comment on the latest posts from...';
-  message = message.replace( '@username', '@'+accounts[i] );
-  transf.memo = message;
+  message = message.replace( '@username', '@' + postAuthor );
+  const transf = {
+    from: bot,
+    to: postAuthor,
+    amount: '0.001 SBD',
+    memo: message,
+  }
+
 
   await client.broadcast
     .transfer(transf, key)
