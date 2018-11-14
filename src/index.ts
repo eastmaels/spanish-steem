@@ -74,6 +74,15 @@ mongoose.connection
         if (SIMULATE_ONLY) {
           console.log('simulation only...')
           console.log('sending memos to post author: ', postAuthor)
+        } else if (TEST_ONLY && (postAuthor === 'eastmael' || postAuthor === 'east.autovote')) {
+          console.log('testing send/transfer...')
+          // Send Comment
+          send_memo(client, key, postAuthor, BOT)
+          .then(() => {
+            console.error("Transfer done.")
+          }).catch(() => {
+            console.error("Couldn't transfer")
+          })
         } else {
           console.log('sending memo...')
           // Send Comment
