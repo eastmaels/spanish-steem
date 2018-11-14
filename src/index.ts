@@ -36,7 +36,7 @@ console.log('Operation started')
 console.log('Is simulation?', SIMULATE_ONLY)
 
 // Initialize mongoose then connect
-mongoose.connect(process.env.DATABASE, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 mongoose.connection
   .on('connected', () => {
