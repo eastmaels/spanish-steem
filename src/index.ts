@@ -4,7 +4,10 @@ import { Client, PrivateKey } from 'dsteem'
 import * as es from 'event-stream'
 import * as util from 'util'
 import * as striptags from 'striptags'
-import { send_memo } from './steem'
+import {
+  send_memo,
+  getPostData,
+} from './steem'
 
 const mongoose = require('mongoose')
 require('./models/Overseer');
