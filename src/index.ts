@@ -24,6 +24,8 @@ let BOT: string = process.env.BOT
 let TEST_TAG: string = process.env.TEST_TAG
 // @ts-ignore
 let SIMULATE_ONLY: boolean = (process.env.SIMULATE_ONLY === "true")
+// @ts-ignore
+let TEST_ONLY: boolean = (process.env.TEST_ONLY === "true")
 
 // Steem Init
 const client = new Client('https://api.steemit.com')
