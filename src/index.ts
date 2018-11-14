@@ -82,10 +82,7 @@ mongoose.connection
         console.log('author: ', postAuthor)
         console.log('permlink: ', permlink)
 
-        if (SIMULATE_ONLY) {
-          console.log('simulation only...')
-          console.log('sending memos to post author: ', postAuthor)
-        } else if (TEST_ONLY && (postAuthor === 'eastmael' || postAuthor === 'east.autovote')) {
+        if (TEST_ONLY && (postAuthor === 'eastmael' || postAuthor === 'east.autovote')) {
           console.log('testing send/transfer...')
           // Send Comment
           send_memo(client, key, postAuthor, BOT)
@@ -94,6 +91,9 @@ mongoose.connection
           }).catch(() => {
             console.error("Couldn't transfer")
           })
+        } else if (SIMULATE_ONLY) {
+          console.log('simulation only...')
+          console.log('sending memos to post author: ', postAuthor)
         } else {
           console.log('sending memo...')
           // Send Comment
