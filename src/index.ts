@@ -21,6 +21,8 @@ let ACCOUNT_KEY: string = process.env.ACCOUNT_KEY
 // @ts-ignore
 let BOT: string = process.env.BOT
 // @ts-ignore
+let TEST_TAG: string = process.env.TEST_TAG
+// @ts-ignore
 let SIMULATE_ONLY: boolean = (process.env.SIMULATE_ONLY === "true")
 
 // Steem Init
@@ -64,7 +66,14 @@ mongoose.connection
         }
 
         // Check if contains spanish tags
-        let containsSpTags = (postTags && (postTags.indexOf('spanish') >= 0 || postTags.indexOf('sp') >= 0))
+        let containsSpTags = (
+          postTags
+            && (
+              postTags.indexOf('spanish') >= 0
+              || postTags.indexOf('sp') >= 0
+              || postTags.indexOf(TEST_TAG) >= 0
+            )
+        )
         console.log('contains spanish OR sp tags: ', containsSpTags)
         if (!containsSpTags) return
 
