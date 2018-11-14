@@ -45,11 +45,14 @@ mongoose.connection
         let txData = operation.op[1]
 
         // Limit to posts only
-        // if (txData.parent_author !== '') return
+        if (txData.parent_author !== '') return
 
         // get post data
         let postAuthor: string = txData.author
         let permlink: string = txData.permlink
+        console.log('author: ', postAuthor)
+        console.log('permlink: ', permlink)
+
         let post = await getPostData(postAuthor, permlink).catch(() =>
           console.error("Couldn't fetch post data with SteemJS")
         )
@@ -64,8 +67,8 @@ mongoose.connection
         }
 
         // Check if contains spanish tags
-        let containsSpTags = (postTags.indexOf('spanish') >= 0 || postTags.indexOf('sp') >= 0)
-        console.log('contains spanish ro sp tags: ', containsSpTags)
+        let containsSpTags = (postTags && (postTags.indexOf('spanish') >= 0 || postTags.indexOf('sp') >= 0))
+        console.log('contains spanish OR sp tags: ', containsSpTags)
         if (!containsSpTags) return
 
         if (SIMULATE_ONLY) {
