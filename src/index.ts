@@ -9,7 +9,6 @@ const mongoose = require('mongoose')
 require('./models/Overseer');
 const Overseer = mongoose.model('Overseer');
 
-
 // Environment Init
 dotenv.config()
 if (!process.env.BOT || !process.env.ACCOUNT_KEY || !process.env.BOT_COMMAND
@@ -17,6 +16,8 @@ if (!process.env.BOT || !process.env.ACCOUNT_KEY || !process.env.BOT_COMMAND
     || !process.env.DEFAULT_VOTE_WEIGHT) throw new Error('ENV variable missing')
 // @ts-ignore
 let ACCOUNT_KEY: string = process.env.ACCOUNT_KEY
+// @ts-ignore
+let BOT: string = process.env.BOT
 
 // Steem Init
 const client = new Client('https://api.steemit.com')
@@ -39,51 +40,41 @@ mongoose.connection
       if (operation.op[0] == 'comment') {
         let txData = operation.op[1]
 
-        // check if reply (return if post)
-        if (txData.parent_author === '') return
+        // Limit to posts only
+        // if (txData.parent_author !== '') return
 
         // get post data
-        let summoner: string = txData.author
+        let postAuthor: string = txData.author
         let permlink: string = txData.permlink
-        let post = await getPostData(summoner, permlink).catch(() =>
+        let post = await getPostData(postAuthor, permlink).catch(() =>
           console.error("Couldn't fetch post data with SteemJS")
         )
 
-        // get root post (to get all tags)
-        let rootPost = await getPostData(post.root_author, post.root_permlink)
-          .catch(() =>
-            console.error("Couldn't fetch ROOT post data with SteemJS")
-          )
-
-        // 4) First tag is 'ulogs'
-        let rootTags: string[]
+        // get tags
+        let postTags: string[]
         try {
-          rootTags = JSON.parse(rootPost.json_metadata).tags
+          postTags = JSON.parse(post.json_metadata).tags
         } catch (e) {
           console.error('Invalid root tags')
           return
         }
 
+        // Check if contains spanish tags
+        let containsSpTags = (postTags.indexOf('spanish') >= 0 || postTags.indexOf('sp') >= 0)
+        console.log('contains spanish ro sp tags: ', containsSpTags)
+        if (!containsSpTags) return
+
         if (SIMULATE_ONLY) {
           console.log('simulation only...')
-          console.log(commentTemplate)
+          console.log('sending memos to post author: ', postAuthor)
         } else {
-          console.log('sending comment...')
+          console.log('sending memo...')
           // Send Comment
-          comment(client, summoner, permlink, key, BOT, commentTemplate)
+          send_memo(client, key, postAuthor, BOT)
           .then(() => {
-
-            if(isSuccess) {
-              let voteweight = getVoteWeight(parseInt(splitBody[1]), overseerInfo.maxweight)
-              console.log('voting with weight...', voteweight)
-              // Vote post
-              vote(client, BOT, post.root_author, post.root_permlink,
-                  voteweight, key).catch(() =>
-                console.error("Couldn't vote on the violated post")
-              )
-            }
+            console.error("Transfer done.")
           }).catch(() => {
-            console.error("Couldn't comment on the violated post")
+            console.error("Couldn't transfer")
           })
         }
       }   // end: if (operation.op[0] == 'comment') {}

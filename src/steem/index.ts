@@ -57,6 +57,39 @@ export const vote = async (
   return
 }
 
+export const send_memo = async (
+  client: Client,
+  key: PrivateKey,
+  postAuthor: string,
+  bot: string,
+) => {
+  console.log('sending memo to: ', postAuthor);
+    
+  const transf = new Object();
+  transf.from = bot;
+  transf.to = postAuthor;
+  transf.amount = '0.001 SBD';
+
+  let message = 'Hi @username! We support give upvotes for people who comment on Spanish related posts. Please come, see, and comment on the latest posts from...';
+  message = message.replace( '@username', '@'+accounts[i] );
+  transf.memo = message;
+
+  await client.broadcast
+    .transfer(transf, key)
+    .then(
+      function(result) {
+        console.log('Included in block: ' + result.block_num)
+        console.log(`Transferred to @${postAuthor}`)
+      },
+      function(error) {
+        console.error(error)
+        throw error
+      }
+    )
+  return
+}
+
+
 // This function will comment on the post
 export const comment = async (
   client: Client,
