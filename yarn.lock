@@ -39,13 +39,7 @@
     "@types/long" "*"
     "@types/node" "*"
 
-"@types/dotenv-safe@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@types/dotenv-safe/-/dotenv-safe-5.0.0.tgz#a122a0a9e9f4608674ac315dbc4b22a7845d2c3d"
-  dependencies:
-    "@types/dotenv" "*"
-
-"@types/dotenv@*", "@types/dotenv@^4.0.3":
+"@types/dotenv@^4.0.3":
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-4.0.3.tgz#ebcfc40da7bc0728b705945b7db48485ec5b4b67"
   dependencies:
@@ -57,9 +51,10 @@
   dependencies:
     es6-promise "*"
 
-"@types/event-stream@^3.3.33":
+"@types/event-stream@3.3.33":
   version "3.3.33"
   resolved "https://registry.yarnpkg.com/@types/event-stream/-/event-stream-3.3.33.tgz#ca155f6e805b606175322c03e6d75bc3b940cb95"
+  integrity sha512-Wqfgz7PzIquugISKAlj1nKD4f1QtmjYzWqrpdYp3B64TkS6GlWp0Aj+3ldXvTQUx1/XuMkw29uC9QViTpVPD6w==
   dependencies:
     "@types/node" "*"
 
@@ -1192,9 +1187,10 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
-event-stream@^3.3.4, event-stream@~3.3.0:
+event-stream@3.3.4, event-stream@~3.3.0:
   version "3.3.4"
-  resolved "http://registry.npmjs.org/event-stream/-/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
+  resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
+  integrity sha1-SrTJoPWlTbkzi0w02Gv86PSzVXE=
   dependencies:
     duplexer "~0.1.1"
     from "~0"
