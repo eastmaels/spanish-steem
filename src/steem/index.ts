@@ -70,7 +70,7 @@ export const send_memo = async (
   const transf = {
     from: bot,
     to: postAuthor,
-    amount: '0.001 SBD',
+    amount: '0.001 STEEM',
     memo: message,
   }
 
