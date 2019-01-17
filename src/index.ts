@@ -15,9 +15,9 @@ const Overseer = mongoose.model('Overseer');
 
 // Environment Init
 dotenv.config()
-if (!process.env.BOT || !process.env.ACCOUNT_KEY) throw new Error('ENV variable missing')
+if (!process.env.BOT || !process.env.POSTING_KEY) throw new Error('ENV variable missing')
 // @ts-ignore
-let ACCOUNT_KEY: string = process.env.ACCOUNT_KEY
+let POSTING_KEY: string = process.env.POSTING_KEY
 // @ts-ignore
 let BOT: string = process.env.BOT
 // @ts-ignore
@@ -29,7 +29,7 @@ let TEST_ONLY: boolean = (process.env.TEST_ONLY === "true")
 
 // Steem Init
 const client = new Client('https://api.steemit.com')
-let key = PrivateKey.from(ACCOUNT_KEY)
+let key = PrivateKey.from(POSTING_KEY)
 const stream = client.blockchain.getOperationsStream()
 
 console.log('Operation started')
