@@ -57,6 +57,19 @@ export const vote = async (
   return
 }
 
+const memo_template = `Quiero ayudar a todos los hispanohablantes a votar su comentario. Tengo más de 23,000 Steem Power, no era mucho, pero tal vez mis votos tengan algún significado para alguien.
+
+ Lo que debe hacer es...
+1. Mire el video tema del día publicado en www.steemit.com/@fatimajunio
+
+2. Haga un comentario como un reflejo de lo que comprende
+
+3. Si puede hacer un comentario de video sobre el tema es mejor para recibir votos más grandes. Puedes usar @dtube o youtube o @dsound.
+
+Te invito a unirte también a nuestro chat Discord.
+https://discord.gg/vzHFNd6
+`;
+
 export const send_memo = async (
   client: Client,
   key: PrivateKey,
@@ -71,7 +84,7 @@ export const send_memo = async (
     from: bot,
     to: postAuthor,
     amount: '0.001 SBD',
-    memo: message,
+    memo: memo_template,
   }
 
 

@@ -21,11 +21,14 @@ let POSTING_KEY: string = process.env.POSTING_KEY
 // @ts-ignore
 let BOT: string = process.env.BOT
 // @ts-ignore
-let TEST_TAG: string = process.env.TEST_TAG
-// @ts-ignore
 let SIMULATE_ONLY: boolean = (process.env.SIMULATE_ONLY === "true")
 // @ts-ignore
 let TEST_ONLY: boolean = (process.env.TEST_ONLY === "true")
+// @ts-ignore
+let TAGS: string = process.env.TAGS
+let targetTags = TAGS.split(',').map(function(item) {
+  return item.trim();
+})
 
 // Steem Init
 const client = new Client('https://api.steemit.com')
@@ -68,15 +71,19 @@ mongoose.connection
         }
 
         // Check if contains spanish tags
-        let containsSpTags = (
-          postTags
-            && (
-              postTags.indexOf('spanish') >= 0
-              || postTags.indexOf('sp') >= 0
-              || postTags.indexOf(TEST_TAG) >= 0
-            )
-        )
-        console.log('contains spanish OR sp tags: ', containsSpTags)
+        let containsSpTags = false
+        if (postTags) {
+          let i;
+          for (i = 0; i < targetTags.length; i++) {
+            if (postTags.indexOf(targetTags[i]) >= 0) {
+              console.log('targetTags[i]', targetTags[i])
+              containsSpTags = true
+              break;
+            }
+          }
+        }
+
+        console.log('contains any of specified tags: ', containsSpTags)
         if (!containsSpTags) return
 
         console.log('author: ', postAuthor)
